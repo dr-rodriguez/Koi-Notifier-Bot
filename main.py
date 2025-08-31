@@ -33,6 +33,17 @@ if __name__ == "__main__":
         f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}.",
         f"Patch 7.4 will be here sooner than you think. Keep leveling black mage, <@{USER_ID}>! It's at level {level}.",
     ]
+    if level == 0:
+        message_list.append(f"Come on, <@{USER_ID}>, you haven't even started leveling black mage yet! It's time to get going!")
+    if level >= 90:
+        message_list.append(f"Wow, <@{USER_ID}>, black mage is already level {level}! You're doing great!")
+
+    # Overwrite to a single message at level 100
+    if level == 100:
+        message_list = [
+            f"Congratulations, <@{USER_ID}>! You leveled black mage to 100! Not you can start playing the game!",
+        ]
+
 
     # Start the Discord client and send the message
     client = DiscordClient(intents=discord.Intents.default())
