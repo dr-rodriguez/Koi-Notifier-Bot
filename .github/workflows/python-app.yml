@@ -6,7 +6,7 @@ name: Run Python application
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 19 * * 5'
+    - cron: '0 23 * * 5'  # 23 UTC 7pm EST on Fridays 
 
 jobs:
   build:
