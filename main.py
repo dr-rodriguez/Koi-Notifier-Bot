@@ -3,7 +3,6 @@
 import os
 import random
 
-import discord
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 
@@ -34,9 +33,13 @@ if __name__ == "__main__":
         f"Patch 7.4 will be here sooner than you think. Keep leveling black mage, <@{USER_ID}>! It's at level {level}.",
     ]
     if level == 0:
-        message_list.append(f"Come on, <@{USER_ID}>, you haven't even started leveling black mage yet! It's time to get going!")
+        message_list.append(
+            f"Come on, <@{USER_ID}>, you haven't even started leveling black mage yet! It's time to get going!"
+        )
     if level >= 90:
-        message_list.append(f"Wow, <@{USER_ID}>, black mage is already level {level}! You're doing great!")
+        message_list.append(
+            f"Wow, <@{USER_ID}>, black mage is already level {level}! You're doing great!"
+        )
 
     # Overwrite to a single message at level 100
     if level == 100:
@@ -48,6 +51,5 @@ if __name__ == "__main__":
     message = random.choice(message_list)
 
     # Start the Discord client and send the message
-    client = DiscordClient(intents=discord.Intents.default(), token=CLIENT_SECRET, channel_id=CHANNEL_ID)
+    client = DiscordClient(token=CLIENT_SECRET, channel_id=CHANNEL_ID)
     client.send_message(message_content=message)
-
