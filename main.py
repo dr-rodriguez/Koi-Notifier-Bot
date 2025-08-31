@@ -12,7 +12,7 @@ from messenger import DiscordClient
 if __name__ == "__main__":
     # Fetch environment variables
     load_dotenv()
-    CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+    DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
     LODESTONE_URL = os.getenv("LODESTONE_URL")
     USER_ID = int(os.getenv("USER_ID"))
     CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
@@ -51,5 +51,5 @@ if __name__ == "__main__":
     message = random.choice(message_list)
 
     # Start the Discord client and send the message
-    client = DiscordClient(token=CLIENT_SECRET, channel_id=CHANNEL_ID)
+    client = DiscordClient(token=DISCORD_TOKEN, channel_id=CHANNEL_ID)
     client.send_message(message_content=message)
