@@ -44,13 +44,10 @@ if __name__ == "__main__":
             f"Congratulations, <@{USER_ID}>! You leveled black mage to 100! Not you can start playing the game!",
         ]
 
-
-    # Start the Discord client and send the message
-    client = DiscordClient(intents=discord.Intents.default())
-    client.run(CLIENT_SECRET)
-
     # Pick random message
     message = random.choice(message_list)
 
-    # Send the message
-    client.send_message(message)
+    # Start the Discord client and send the message
+    client = DiscordClient(intents=discord.Intents.default(), token=CLIENT_SECRET, channel_id=CHANNEL_ID)
+    client.send_message(message_content=message)
+

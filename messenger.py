@@ -1,55 +1,50 @@
 # Code to handle logic for communicating with Discord
 # Example from https://github.com/Rapptz/discord.py/blob/master/examples/background_task.py
 
-import os
-from discord.ext import tasks
-
 import discord
-from dotenv import load_dotenv
-
-load_dotenv()
-
-# Get some variables
-CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
 
 
 class DiscordClient(discord.Client):
-    # Suppress error on the User attribute being None since it fills up later
-    user: discord.ClientUser
+    """
+    A class to handle the core logic of sending a message to a Discord channel.
+    This class is designed to be imported and used by other scripts.
+    """
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def __init__(self, token, channel_id):
+        self.token = token
+        self.channel_id = channel_id
+        self.client = discord.Client(intents=discord.Intents.default())
 
-        # an attribute we can access from our task
-        self.counter = 0
-
-    async def setup_hook(self) -> None:
-        # start the task to run in the background
-        self.my_background_task.start()
+        # We need to set up the on_ready event handler as a coroutine within the class instance.
+        # This is a common pattern for running a one-off task with discord.py.
+        self.client.event(self.on_ready)
 
     async def on_ready(self):
-        print(f'Logged in as {self.user} (ID: {self.user.id})')
-        print('------')
+        """
+        The coroutine that runs when the client is successfully connected.
+        It sends the message and then closes the connection.
+        """
+        print(f"{self.client.user} has successfully connected to Discord!")
 
-    # Not sure if this will work
-    async def send_message(self, channel, message):
-        channel = self.get_channel(channel, message)
-        await channel.send(message)
+        channel = self.client.get_channel(self.channel_id)
+        if channel:
+            try:
+                # The message content is passed to the send method, not the class constructor.
+                # This allows for a new message to be generated for each call.
+                await channel.send(self._message_to_send)
+                print(f"Message sent to channel {channel.name}!")
+                print(f"Message content: {self._message_to_send}")
+            except Exception as e:
+                print(f"Failed to send message: {e}")
+        else:
+            print(f"Error: Could not find a channel with the ID `{self.channel_id}`.")
 
-    @tasks.loop(seconds=60)  # task runs every 60 seconds
-    async def my_background_task(self):
-        channel = self.get_channel(CHANNEL_ID)  # channel ID goes here
-        
-        # Tell the type checker that this is a messageable channel
-        assert isinstance(channel, discord.abc.Messageable)
+        await self.client.close()
 
-        self.counter += 1
-        await channel.send(str(self.counter))
-        # <@USER_ID>  # mention a user by their id
-
-    @my_background_task.before_loop
-    async def before_my_task(self):
-        await self.wait_until_ready()  # wait until the bot logs in
-
-
-
+    def send_message(self, message_content: str):
+        """
+        Public method to start the message sending process.
+        It stores the message content and runs the client.
+        """
+        self._message_to_send = message_content
+        self.client.run(self.token)
