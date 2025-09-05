@@ -31,11 +31,15 @@ if __name__ == "__main__":
         f"You didn't forget to level black mage, did you, <@{USER_ID}>? It's at level {level} now.",
         f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}.",
         f"Patch 7.4 will be here sooner than you think. Keep leveling black mage, <@{USER_ID}>! It's at level {level}.",
+        f"Yoshi P will be disappointed if you don't level black mage, <@{USER_ID}>! It's currently level {level}.",
+        f"Sigh... your black mage is still only level {level}, <@{USER_ID}>. You can do better.",
+        f"Are you forgetting something, <@{USER_ID}>? That's right! You need to level your black mage. You're at level {level}.",
+        f"This is your weekly reminder to level black mage, <@{USER_ID}>! It's currently level {level}.",
     ]
-    if level == 0:
-        message_list.append(
-            f"Come on, <@{USER_ID}>, you haven't even started leveling black mage yet! It's time to get going!"
-        )
+    # if level == 0:
+    #     message_list.append(
+    #         f"Come on, <@{USER_ID}>, you haven't even started leveling black mage yet! It's time to get going!"
+    #     )
     if level >= 90:
         message_list.append(
             f"Wow, <@{USER_ID}>, black mage is already level {level}! You're doing great!"
@@ -44,7 +48,7 @@ if __name__ == "__main__":
     # Overwrite to a single message at level 100
     if level == 100:
         message_list = [
-            f"Congratulations, <@{USER_ID}>! You leveled black mage to 100! Not you can start playing the game!",
+            f"Congratulations, <@{USER_ID}>! You leveled black mage to 100. Now you can start playing the game!",
         ]
 
     # Pick random message

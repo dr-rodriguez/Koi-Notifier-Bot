@@ -1,3 +1,3 @@
 # Koi Notifier Bot
 
-Just a bot.
+Just a Discord messenger bot.
