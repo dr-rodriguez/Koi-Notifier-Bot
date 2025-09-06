@@ -28,6 +28,6 @@ jobs:
         USER_ID: ${{ secrets.USER_ID }}
         LODESTONE_URL: ${{ secrets.LODESTONE_URL }}
         DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
-        FFXIV_CHANNEL_ID: ${{ secrets.CHANNEL_ID }}
+        FFXIV_CHANNEL_ID: ${{ secrets.FFXIV_CHANNEL_ID }}
       run: |
         python main.py --ffxiv
