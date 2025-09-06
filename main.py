@@ -1,5 +1,6 @@
 # The main application code
 
+import argparse
 import os
 import random
 
@@ -9,13 +10,8 @@ from dotenv import load_dotenv
 from fetch_lodestone import fetch_lodestone, get_black_mage_level
 from messenger import DiscordClient
 
-if __name__ == "__main__":
-    # Fetch environment variables
-    load_dotenv()
-    DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-    LODESTONE_URL = os.getenv("LODESTONE_URL")
-    USER_ID = int(os.getenv("USER_ID"))
-    CHANNEL_ID = int(os.getenv("CHANNEL_ID"))
+def ffxiv_notification():
+    """Main function to set up the correct message for FFXIV"""
 
     # Grab the lodestone page and parse it
     html_doc = fetch_lodestone(LODESTONE_URL)
@@ -36,10 +32,6 @@ if __name__ == "__main__":
         f"Are you forgetting something, <@{USER_ID}>? That's right! You need to level your black mage. You're at level {level}.",
         f"This is your weekly reminder to level black mage, <@{USER_ID}>! It's currently level {level}.",
     ]
-    # if level == 0:
-    #     message_list.append(
-    #         f"Come on, <@{USER_ID}>, you haven't even started leveling black mage yet! It's time to get going!"
-    #     )
     if level >= 90:
         message_list.append(
             f"Wow, <@{USER_ID}>, black mage is already level {level}! You're doing great!"
@@ -54,6 +46,55 @@ if __name__ == "__main__":
     # Pick random message
     message = random.choice(message_list)
 
+    return message
+
+
+def dnd_notification():
+    """Main function to set up the correct message for DND"""
+
+    # List of messages to choose from
+    message_list = [
+        f"Hey, <@{USER_ID}>. Time for some DnD!",
+        f"It's Thursday night, <@{USER_ID}>. You know what that means! DnD time!",
+        f"Don't forget, <@{USER_ID}>, it's DnD night!",
+        f"Roll for initiative, <@{USER_ID}>! It's DnD time!",
+        f"<@{USER_ID}>, your DnD party awaits!",
+    ]
+
+    # Pick random message
+    message = random.choice(message_list)
+
+    return message
+
+
+if __name__ == "__main__":
+    # Use argparse to handle command line arguments
+    parser = argparse.ArgumentParser(
+        description="A bot to notify a user on a Discord channel."
+    )
+    parser.add_argument("--ffxiv", action="store_true", help="Send FFXIV Black Mage level notification")
+    parser.add_argument("--dnd", action="store_true", help="Send DnD night notification")
+    args = parser.parse_args()
+
+
+    # Fetch environment variables
+    load_dotenv()
+    DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+    LODESTONE_URL = os.getenv("LODESTONE_URL")
+    USER_ID = int(os.getenv("USER_ID"))
+
+    if args.ffxiv:
+        # Send FFXIV notification
+        message = ffxiv_notification()
+        channel_id = int(os.getenv("FFXIV_CHANNEL_ID"))
+    elif args.dnd:
+        # Send DnD notification
+        message = dnd_notification()
+        channel_id = int(os.getenv("DND_CHANNEL_ID"))
+
     # Start the Discord client and send the message
-    client = DiscordClient(token=DISCORD_TOKEN, channel_id=CHANNEL_ID)
-    client.send_message(message_content=message)
+    if message is not None and channel_id is not None:
+        client = DiscordClient(token=DISCORD_TOKEN, channel_id=channel_id)
+        client.send_message(message_content=message)
+    else:
+        print(f"Error preparing message or getting channel_id: {message}, {channel_id}")
