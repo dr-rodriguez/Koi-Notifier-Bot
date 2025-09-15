@@ -29,8 +29,11 @@ def ffxiv_notification():
         f"Patch 7.4 will be here sooner than you think. Keep leveling black mage, <@{USER_ID}>! It's at level {level}.",
         f"Yoshi P will be disappointed if you don't level black mage, <@{USER_ID}>! It's currently level {level}.",
         f"Sigh... your black mage is still only level {level}, <@{USER_ID}>. You can do better.",
-        f"Are you forgetting something, <@{USER_ID}>? That's right! You need to level your black mage. You're at level {level}.",
+        # f"Are you forgetting something, <@{USER_ID}>? That's right! You need to level your black mage. You're at level {level}.",
         f"This is your weekly reminder to level black mage, <@{USER_ID}>! It's currently level {level}.",
+        f"Y'shtola looks at you with disappointment, <@{USER_ID}>. Your black mage is only level {level}.",
+        f"Haurchefant died so you could level black mage, <@{USER_ID}>. It's only level {level}.",
+        f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}.",
     ]
     if level >= 90:
         message_list.append(
@@ -59,6 +62,10 @@ def dnd_notification():
         f"Don't forget, <@{USER_ID}>, it's DnD night!",
         f"Roll for initiative, <@{USER_ID}>! It's DnD time!",
         f"<@{USER_ID}>, your DnD party awaits!",
+        f"Grab your dice, <@{USER_ID}>! It's time for DnD!",
+        f"Prepare for adventure, <@{USER_ID}>! DnD night is here!",
+        f"Your DnD friends are counting on you, <@{USER_ID}>!",
+        f"Don't let your DnD party down, <@{USER_ID}>!",
     ]
 
     # Pick random message
