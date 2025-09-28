@@ -21,11 +21,11 @@ def ffxiv_notification():
 
     # List of messages to choose from
     message_list = [
-        f"Hey, <@{USER_ID}>. Remember to level black mage! Current level: {level}",
+        # f"Hey, <@{USER_ID}>. Remember to level black mage! Current level: {level}",
         f"Black mage is at level {level}. Keep going, <@{USER_ID}>!",
         f"Don't forget to level black mage, <@{USER_ID}>! It's currently level {level}.",
         f"You didn't forget to level black mage, did you, <@{USER_ID}>? It's at level {level} now.",
-        f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}.",
+        # f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}.",
         f"Patch 7.4 will be here sooner than you think. Keep leveling black mage, <@{USER_ID}>! It's at level {level}.",
         f"Yoshi P will be disappointed if you don't level black mage, <@{USER_ID}>! It's currently level {level}.",
         f"Sigh... your black mage is still only level {level}, <@{USER_ID}>. You can do better.",
@@ -34,14 +34,30 @@ def ffxiv_notification():
         f"Y'shtola looks at you with disappointment, <@{USER_ID}>. Your black mage is only level {level}.",
         f"Haurchefant died so you could level black mage, <@{USER_ID}>. It's only level {level}.",
         f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}.",
+        f"The best class in the game is black mage. Level it up, <@{USER_ID}>! It's currently level {level}.",
+        f"Don't make me come over there, <@{USER_ID}>. Level your black mage! It's at level {level}.",
     ]
-    if level >= 90:
+    # Special messages for certain levels
+    if level == 0:
+        message_list.extend(
+            [
+                f"Hey, <@{USER_ID}>, why haven't you started leveling black mage yet? It's still level 0!",
+                f"Black mage is still level 0, <@{USER_ID}>. You should probably start leveling it.",
+            ]
+        )
+    elif level > 0:
+        message_list.extend(
+            [
+                f"Wow, <@{USER_ID}>, you actually started leveling black mage! It's level {level} now!",
+                f"It's a miracle, <@{USER_ID}>! You started leveling black mage! You're at level {level}.",
+            ]
+        )
+    elif level >= 90:
         message_list.append(
             f"Wow, <@{USER_ID}>, black mage is already level {level}! You're doing great!"
         )
-
     # Overwrite to a single message at level 100
-    if level == 100:
+    elif level == 100:
         message_list = [
             f"Congratulations, <@{USER_ID}>! You leveled black mage to 100. Now you can start playing the game!",
         ]
@@ -66,6 +82,7 @@ def dnd_notification():
         f"Prepare for adventure, <@{USER_ID}>! DnD night is here!",
         f"Your DnD friends are counting on you, <@{USER_ID}>!",
         f"Don't let your DnD party down, <@{USER_ID}>!",
+        f"Get ready for some epic quests, <@{USER_ID}>! It's DnD night!",
     ]
 
     # Pick random message
