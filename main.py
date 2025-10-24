@@ -22,7 +22,7 @@ def ffxiv_notification():
     # List of messages to choose from
     message_list = [
         # f"Hey, <@{USER_ID}>. Remember to level black mage! Current level: {level}",
-        f"Black mage is at level {level}. Keep going, <@{USER_ID}>!",
+        # f"Black mage is at level {level}. Keep going, <@{USER_ID}>!",
         f"Don't forget to level black mage, <@{USER_ID}>! It's currently level {level}.",
         f"You didn't forget to level black mage, did you, <@{USER_ID}>? It's at level {level} now.",
         # f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}.",
@@ -35,7 +35,7 @@ def ffxiv_notification():
         f"Haurchefant died so you could level black mage, <@{USER_ID}>. It's only level {level}.",
         f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}.",
         f"The best class in the game is black mage. Level it up, <@{USER_ID}>! It's currently level {level}.",
-        f"Don't make me come over there, <@{USER_ID}>. Level your black mage! It's at level {level}.",
+        # f"Don't make me come over there, <@{USER_ID}>. Level your black mage! It's at level {level}.",
     ]
     # Special messages for certain levels
     if level == 0:
@@ -43,6 +43,7 @@ def ffxiv_notification():
             [
                 f"Hey, <@{USER_ID}>, why haven't you started leveling black mage yet? It's still level 0!",
                 f"Black mage is still level 0, <@{USER_ID}>. You should probably start leveling it.",
+                f"Don't you want to play black mage, <@{USER_ID}>? It's still level 0!",
             ]
         )
     elif level > 0:
