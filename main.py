@@ -1,6 +1,7 @@
 # The main application code
 
 import argparse
+import datetime
 import os
 import random
 
@@ -9,6 +10,7 @@ from dotenv import load_dotenv
 
 from fetch_lodestone import fetch_lodestone, get_black_mage_level
 from messenger import DiscordClient
+
 
 def ffxiv_notification():
     """Main function to set up the correct message for FFXIV"""
@@ -19,31 +21,34 @@ def ffxiv_notification():
     level = get_black_mage_level(soup)
     print("Black Mage Level:", level)
 
+    # Number of days until patch 7.4 (December 16, 2025)
+    days_until_patch = (datetime.datetime(2025, 12, 16) - datetime.datetime.now()).days
+
     # List of messages to choose from
     message_list = [
         # f"Hey, <@{USER_ID}>. Remember to level black mage! Current level: {level}",
         # f"Black mage is at level {level}. Keep going, <@{USER_ID}>!",
         f"Don't forget to level black mage, <@{USER_ID}>! It's currently level {level}.",
         f"You didn't forget to level black mage, did you, <@{USER_ID}>? It's at level {level} now.",
-        # f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}.",
-        f"Patch 7.4 will be here sooner than you think. Keep leveling black mage, <@{USER_ID}>! It's at level {level}.",
+        f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}. You only have {days_until_patch} days until patch 7.4!",
+        f"Patch 7.4 will be here sooner than you think (just {days_until_patch} days!). Keep leveling black mage, <@{USER_ID}>! It's at level {level}.",
         f"Yoshi P will be disappointed if you don't level black mage, <@{USER_ID}>! It's currently level {level}.",
-        f"Sigh... your black mage is still only level {level}, <@{USER_ID}>. You can do better.",
-        # f"Are you forgetting something, <@{USER_ID}>? That's right! You need to level your black mage. You're at level {level}.",
+        f"Sigh... your black mage is still only level {level}, <@{USER_ID}>. You can do better. Only {days_until_patch} days until patch 7.4!",
         f"This is your weekly reminder to level black mage, <@{USER_ID}>! It's currently level {level}.",
         f"Y'shtola looks at you with disappointment, <@{USER_ID}>. Your black mage is only level {level}.",
         f"Haurchefant died so you could level black mage, <@{USER_ID}>. It's only level {level}.",
-        f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}.",
-        f"The best class in the game is black mage. Level it up, <@{USER_ID}>! It's currently level {level}.",
+        f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}. Only {days_until_patch} days until patch 7.4!",
+        f"The best class in the game is black mage. Level it up, <@{USER_ID}>! It's currently level {level}. Only {days_until_patch} days until patch 7.4!",
         # f"Don't make me come over there, <@{USER_ID}>. Level your black mage! It's at level {level}.",
     ]
     # Special messages for certain levels
     if level == 0:
         message_list.extend(
             [
-                f"Hey, <@{USER_ID}>, why haven't you started leveling black mage yet? It's still level 0!",
-                f"Black mage is still level 0, <@{USER_ID}>. You should probably start leveling it.",
-                f"Don't you want to play black mage, <@{USER_ID}>? It's still level 0!",
+                f"Hey, <@{USER_ID}>, why haven't you started leveling black mage yet? It's still level 0! You only have {days_until_patch} days until patch 7.4!",
+                f"Black mage is still level 0, <@{USER_ID}>. You should probably start leveling it- you only have {days_until_patch} days until patch 7.4!",
+                f"Don't you want to play black mage, <@{USER_ID}>? It's still level 0! Patch 7.4 is only {days_until_patch} days away!",
+                f"The clock is ticking, <@{USER_ID}>! You only have {days_until_patch} days to level black mage until patch 7.4!",
             ]
         )
     elif level > 0:
