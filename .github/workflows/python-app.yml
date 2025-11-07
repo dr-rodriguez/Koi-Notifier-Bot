@@ -6,7 +6,7 @@ name: Run FFXIV Notification
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * 6'  # 00 UTC 8pm EDT on Fridays (Saturday 00:00 UTC during DST)
+    - cron: '0 0 * * 6'  # 0:00 UTC 7pm EDT on Fridays (Saturday 00:00 UTC during DST)
 
 jobs:
   build:
