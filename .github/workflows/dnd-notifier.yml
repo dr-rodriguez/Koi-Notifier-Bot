@@ -6,7 +6,7 @@ name: Run DnD Notification
 on:
   workflow_dispatch:
   schedule:
-    - cron: '52 0 * * 5'  # 0:50 UTC 7:50pm EDT on Thursdays
+    - cron: '50 23 * * 4'  # 23 UTC 7:50pm EST on Thursdays 
 
 jobs:
   build:
