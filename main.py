@@ -15,6 +15,9 @@ from messenger import DiscordClient
 def ffxiv_notification():
     """Main function to set up the correct message for FFXIV"""
 
+    # Placeholder for image path, if supplied
+    image_path = None
+
     # Grab the lodestone page and parse it
     html_doc = fetch_lodestone(LODESTONE_URL)
     soup = BeautifulSoup(html_doc, "html.parser")
@@ -24,21 +27,26 @@ def ffxiv_notification():
     # Number of days until patch 7.4 (December 16, 2025)
     days_until_patch = (datetime.datetime(2025, 12, 16) - datetime.datetime.now()).days
 
+    # Special image for when there are 7 days until patch 7.4
+    if days_until_patch == 7:
+        image_path = "images/koi_leveling.png"
+
     # List of messages to choose from
     message_list = [
         # f"Hey, <@{USER_ID}>. Remember to level black mage! Current level: {level}",
         # f"Black mage is at level {level}. Keep going, <@{USER_ID}>!",
-        f"Don't forget to level black mage, <@{USER_ID}>! It's currently level {level}.",
-        f"You didn't forget to level black mage, did you, <@{USER_ID}>? It's at level {level} now.",
+        f"Don't forget to level black mage, <@{USER_ID}>! It's currently level {level} and you only have {days_until_patch} days until patch 7.4.",
+        f"You didn't forget to level black mage, did you, <@{USER_ID}>? It's at level {level} now. The clock is ticking: only {days_until_patch} days!",
         f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}. You only have {days_until_patch} days until patch 7.4!",
         f"Patch 7.4 will be here sooner than you think (just {days_until_patch} days!). Keep leveling black mage, <@{USER_ID}>! It's at level {level}.",
-        f"Yoshi P will be disappointed if you don't level black mage, <@{USER_ID}>! It's currently level {level}.",
+        f"Yoshi P will be disappointed if you don't level black mage, <@{USER_ID}> by patch 7.4! It's currently level {level}. Only {days_until_patch} days left!",
         f"Sigh... your black mage is still only level {level}, <@{USER_ID}>. You can do better. Only {days_until_patch} days until patch 7.4!",
-        f"This is your weekly reminder to level black mage, <@{USER_ID}>! It's currently level {level}.",
-        f"Y'shtola looks at you with disappointment, <@{USER_ID}>. Your black mage is only level {level}.",
-        f"Haurchefant died so you could level black mage, <@{USER_ID}>. It's only level {level}.",
-        f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}. Only {days_until_patch} days until patch 7.4!",
-        f"The best class in the game is black mage. Level it up, <@{USER_ID}>! It's currently level {level}. Only {days_until_patch} days until patch 7.4!",
+        f"This is your weekly reminder to level black mage, <@{USER_ID}>! It's currently level {level}. And it's only {days_until_patch} days until patch 7.4!",
+        # f"Y'shtola looks at you with disappointment, <@{USER_ID}>. Your black mage is only level {level}.",
+        # f"Haurchefant died so you could level black mage, <@{USER_ID}>. It's only level {level}.",
+        # f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}. Only {days_until_patch} days until patch 7.4!",
+        f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}. Tick-tock, {days_until_patch} days until patch 7.4!",
+        f"The best class in the game is black mage. Level it up, <@{USER_ID}>! It's currently level {level} and there's only {days_until_patch} days until patch 7.4!",
         # f"Don't make me come over there, <@{USER_ID}>. Level your black mage! It's at level {level}.",
     ]
     # Special messages for certain levels
@@ -54,8 +62,8 @@ def ffxiv_notification():
     elif level > 0:
         message_list.extend(
             [
-                f"Wow, <@{USER_ID}>, you actually started leveling black mage! It's level {level} now!",
-                f"It's a miracle, <@{USER_ID}>! You started leveling black mage! You're at level {level}.",
+                f"Wow, <@{USER_ID}>, you actually started leveling black mage! It's level {level} now! But you only have {days_until_patch} days until patch 7.4!",
+                f"It's a miracle, <@{USER_ID}>! You started leveling black mage! You're at level {level}. Will you make it in time for patch 7.4? Just {days_until_patch} days left!",
             ]
         )
     elif level >= 90:
@@ -67,11 +75,18 @@ def ffxiv_notification():
         message_list = [
             f"Congratulations, <@{USER_ID}>! You leveled black mage to 100. Now you can start playing the game!",
         ]
+        image_path = "images/koi_success.png"
+    
+    if days_until_patch <= 0 and level < 100:
+        message_list = [
+            f"<@{USER_ID}>, you failed to level black mage to 100 in time for patch 7.4. You made us all sad 😭",
+        ]
+        image_path = "images/koi_fail.png"
 
     # Pick random message
     message = random.choice(message_list)
 
-    return message
+    return message, image_path
 
 
 def dnd_notification():
@@ -115,7 +130,7 @@ if __name__ == "__main__":
 
     if args.ffxiv:
         # Send FFXIV notification
-        message = ffxiv_notification()
+        message, image_path = ffxiv_notification()
         channel_id = int(os.getenv("FFXIV_CHANNEL_ID"))
     elif args.dnd:
         # Send DnD notification
@@ -125,6 +140,9 @@ if __name__ == "__main__":
     # Start the Discord client and send the message
     if message is not None and channel_id is not None:
         client = DiscordClient(token=DISCORD_TOKEN, channel_id=channel_id)
-        client.send_message(message_content=message)
+        if image_path is not None:
+            client.send_message_with_image(message_content=message, image_path=image_path)
+        else:
+            client.send_message(message_content=message)
     else:
         print(f"Error preparing message or getting channel_id: {message}, {channel_id}")
