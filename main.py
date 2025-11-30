@@ -28,7 +28,7 @@ def ffxiv_notification():
     days_until_patch = (datetime.datetime(2025, 12, 16) - datetime.datetime.now()).days
 
     # Special image for when there are 7 days until patch 7.4
-    if days_until_patch == 7:
+    if days_until_patch == 14:
         image_path = "images/koi_leveling.png"
 
     # List of messages to choose from
