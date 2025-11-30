@@ -128,6 +128,9 @@ if __name__ == "__main__":
     LODESTONE_URL = os.getenv("LODESTONE_URL")
     USER_ID = int(os.getenv("USER_ID"))
 
+    # Initialize image path
+    image_path = None
+
     if args.ffxiv:
         # Send FFXIV notification
         message, image_path = ffxiv_notification()
