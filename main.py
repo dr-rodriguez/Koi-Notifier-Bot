@@ -49,9 +49,9 @@ def ffxiv_notification():
         # f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}. Tick-tock, {days_until_patch} days until patch 7.4!",
         # f"Patch 7.4 will be here sooner than you think (just {days_until_patch} days!). Keep leveling black mage, <@{USER_ID}>! It's at level {level}.",
         # Unused messages:
-        f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}. You only have {days_until_patch} days until patch 7.4!",
+        # f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}. You only have {days_until_patch} days until patch 7.4!",
         f"Yoshi P will be disappointed if you don't level black mage, <@{USER_ID}> by patch 7.4! It's currently level {level}. Only {days_until_patch} days left!",
-        f"Sigh... your black mage is still only level {level}, <@{USER_ID}>. You can do better. Only {days_until_patch} days until patch 7.4!",
+        # f"Sigh... your black mage is still only level {level}, <@{USER_ID}>. You can do better. Only {days_until_patch} days until patch 7.4!",
         f"This is your weekly reminder to level black mage, <@{USER_ID}>! It's currently level {level}. And it's only {days_until_patch} days until patch 7.4!",
         f"The best class in the game is black mage. Level it up, <@{USER_ID}>! It's currently level {level} and there's only {days_until_patch} days until patch 7.4!",
     ]
