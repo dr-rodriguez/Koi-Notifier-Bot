@@ -42,7 +42,7 @@ def ffxiv_notification():
         # f"Black mage is at level {level}. Keep going, <@{USER_ID}>!",
         # f"Y'shtola looks at you with disappointment, <@{USER_ID}>. Your black mage is only level {level}.",
         # f"Haurchefant died so you could level black mage, <@{USER_ID}>. It's only level {level}.",
-        # f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}. Only {days_until_patch} days until patch 7.4!",
+        f"Are you even trying, <@{USER_ID}>? Black mage is still level {level}. Only {days_until_patch} days until patch 7.4!",
         # f"Don't make me come over there, <@{USER_ID}>. Level your black mage! It's at level {level}.",
         # f"Don't forget to level black mage, <@{USER_ID}>! It's currently level {level} and you only have {days_until_patch} days until patch 7.4.",
         # f"You didn't forget to level black mage, did you, <@{USER_ID}>? It's at level {level} now. The clock is ticking: only {days_until_patch} days!",
@@ -52,7 +52,7 @@ def ffxiv_notification():
         # f"Don't let us down, <@{USER_ID}>! Black mage is only level {level}. You only have {days_until_patch} days until patch 7.4!",
         f"Yoshi P will be disappointed if you don't level black mage, <@{USER_ID}> by patch 7.4! It's currently level {level}. Only {days_until_patch} days left!",
         # f"Sigh... your black mage is still only level {level}, <@{USER_ID}>. You can do better. Only {days_until_patch} days until patch 7.4!",
-        f"This is your weekly reminder to level black mage, <@{USER_ID}>! It's currently level {level}. And it's only {days_until_patch} days until patch 7.4!",
+        f"This is your reminder to level black mage, <@{USER_ID}>! It's currently level {level}. And it's only {days_until_patch} days until patch 7.4!",
         f"The best class in the game is black mage. Level it up, <@{USER_ID}>! It's currently level {level} and there's only {days_until_patch} days until patch 7.4!",
     ]
     # Special messages for certain levels
@@ -88,6 +88,9 @@ def ffxiv_notification():
             f"It's patch day! Congratulations, <@{USER_ID}>... oh wait, nevermind. You didn't finish leveling in time, you're only level {level}. You've made us all sad 😭",
         ]
         image_path = "images/koi_fail.png"
+
+    if days_until_patch in (3, 4, 5) and level < 100:
+        image_path = "images/koi_fry.png"
 
     # Pick random message
     message = random.choice(message_list)
