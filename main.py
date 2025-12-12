@@ -89,9 +89,6 @@ def ffxiv_notification():
         ]
         image_path = "images/koi_fail.png"
 
-    if days_until_patch in (3, 4, 5) and level < 100:
-        image_path = "images/koi_fry.png"
-
     # Pick random message
     message = random.choice(message_list)
 
