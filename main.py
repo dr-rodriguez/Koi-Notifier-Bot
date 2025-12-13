@@ -92,6 +92,12 @@ def ffxiv_notification():
     # Pick random message
     message = random.choice(message_list)
 
+    if days_until_patch == 3 and level < 100:
+        message_list = [
+            f"Hey, <@{USER_ID}>, you're only {days_until_patch} days away from patch 7.4! You better level black mage fast- you're only level {level}. Yenna is warming up the frying pan!",
+        ]
+        image_path = "images/koi_fry2.png"
+
     return message, image_path
 
 
