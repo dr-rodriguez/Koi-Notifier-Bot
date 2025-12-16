@@ -69,7 +69,7 @@ def ffxiv_notification():
         message_list.extend(
             [
                 f"Wow, <@{USER_ID}>, you actually started leveling black mage! It's level {level} now! But you only have {days_until_patch} days until patch 7.4!",
-                f"It's a miracle, <@{USER_ID}>! You started leveling black mage! You're at level {level}. Will you make it in time for patch 7.4? Just {days_until_patch} days left!",
+                # f"It's a miracle, <@{USER_ID}>! You started leveling black mage! You're at level {level}. Will you make it in time for patch 7.4? Just {days_until_patch} days left!",
             ]
         )
     elif level >= 90:
@@ -87,16 +87,10 @@ def ffxiv_notification():
         message_list = [
             f"It's patch day! Congratulations, <@{USER_ID}>... oh wait, nevermind. You didn't finish leveling in time, you're only level {level}. You've made us all sad 😭",
         ]
-        image_path = "images/koi_fail.png"
+        # image_path = "images/koi_fail.png"
 
     # Pick random message
     message = random.choice(message_list)
-
-    if days_until_patch == 3 and level < 100:
-        message_list = [
-            f"Hey, <@{USER_ID}>, you're only {days_until_patch} days away from patch 7.4! You better level black mage fast- you're only level {level}. Yenna is warming up the frying pan!",
-        ]
-        image_path = "images/koi_fry2.png"
 
     return message, image_path
 
